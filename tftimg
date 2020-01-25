@@ -1,0 +1,39 @@
+#!/bin/bash
+
+HOME=/home/tom
+
+#exit 0
+
+OUT=/tmp/canvas$$.rgb
+
+export LC_TIME=nl_NL.UTF-8
+
+DATE1=$(date +"%a %e %b")
+DATE2=$(date +"%H:%M")
+
+DAT=$HOME/tmp/bar.dat
+echo "$6" | tr ';' '\n' > $DAT
+
+IFS=" ;" read -ra DA <<< "$6"
+#DELTA=$(python2 -c "print round(${DA[47]} - ${DA[1]}, 1)" )
+DELTA=$(python3 -c "print(round(${DA[47]} - ${DA[1]}, 1))" )
+
+#gnuplot $HOME/src/esp-listen/bar.conf 2> /dev/null
+gnuplot bar.conf 2> /dev/null
+
+ # -font ComicSansMSB
+convert -depth 8 -size 220x176 -pointsize 30 xc:black \
+ -gravity northwest -fill 'rgb(0,255,0)' -draw "text 0,-6 '$1°C'" \
+ -gravity northeast -fill 'rgb(255,180,0)' -draw "text 0,-6 '$2°C'" \
+ -gravity center -fill 'rgb(99,184,255)' -draw "text 0,-38 '$3 %Rel'" \
+ -gravity west -pointsize 30 -fill 'rgb(255,0,255)' -draw "text 0,38 '$4'" \
+ -gravity east -pointsize 30 -draw "image over 0,37 0,0 '/home/tom/tmp/bar.png'" \
+ -gravity southwest -fill 'rgb(255,0,0)' -draw "text 0,-6 '$5 kW'" \
+ -gravity west -pointsize 22 -fill white -draw "text 0,0 '$DATE1'" \
+ -gravity east -pointsize 34 -fill white -draw "text 0,0 '$DATE2'" \
+ -gravity southeast -pointsize 24 -fill 'rgb(255,0,255)' -draw "text 0,4 '$DELTA'" \
+ $OUT
+
+#(echo raw $(stat -f %z $OUT) 220 0 0 | cat - $OUT | nc 192.168.0.206 12345; rm $OUT) &
+(tft565.py $OUT 220 0 0 192.168.0.206 12345; rm $OUT) &
+
