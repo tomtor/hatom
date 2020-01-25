@@ -23,8 +23,8 @@ gnuplot bar.conf 2> /dev/null
 
  # -font ComicSansMSB
 convert -depth 8 -size 220x176 -pointsize 30 xc:black \
- -gravity northwest -fill 'rgb(0,255,0)' -draw "text 0,-6 '$1°C'" \
- -gravity northeast -fill 'rgb(255,180,0)' -draw "text 0,-6 '$2°C'" \
+ -gravity northwest -fill 'rgb(0,255,0)' -draw "text 0,0 '$1°C'" \
+ -gravity northeast -fill 'rgb(255,180,0)' -draw "text 0,0 '$2°C'" \
  -gravity center -fill 'rgb(99,184,255)' -draw "text 0,-38 '$3 %Rel'" \
  -gravity west -pointsize 30 -fill 'rgb(255,0,255)' -draw "text 0,38 '$4'" \
  -gravity east -pointsize 30 -draw "image over 0,37 0,0 '/home/tom/tmp/bar.png'" \
