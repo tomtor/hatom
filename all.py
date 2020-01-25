@@ -38,7 +38,8 @@ def on_connect(client, userdata, flags, rc):
 curt=0
 
 #ifclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'ttndb')
-ifclient = InfluxDBClient('pine64.v7f.eu', 8086, 'root', 'root', 'ttndb')
+#ifclient = InfluxDBClient('pine64.v7f.eu', 8086, 'root', 'root', 'ttndb')
+ifclient = InfluxDBClient('bsd.v7f.eu', 8086, 'root', 'root', 'ttndb')
 #pineclient = InfluxDBClient('pine64.v7f.eu', 8086, 'root', 'root', 'ttndb')
 def addFlux(node, m, v, ts= None):
     if ts == None:
@@ -63,7 +64,8 @@ def addFlux(node, m, v, ts= None):
     except:
         print('reconnect influxdb local')
         #ifclient = InfluxDBClient('localhost', 8086, 'root', 'root', 'ttndb')
-        ifclient = InfluxDBClient('pine64.v7f.eu', 8086, 'root', 'root', 'ttndb')
+        #ifclient = InfluxDBClient('pine64.v7f.eu', 8086, 'root', 'root', 'ttndb')
+        ifclient = InfluxDBClient('bsd.v7f.eu', 8086, 'root', 'root', 'ttndb')
 
     #global pineclient
     #try:
