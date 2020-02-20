@@ -259,6 +259,7 @@ while True:
         OTemp = float(v[8])
         Volt = 75 + (1-int(v[2]))*3
         f = heater
+        addFlux('esp-room', "heater", 1 - int(v[2]))
         print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
         print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, flush=True)
         print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, file=f, flush=True)
@@ -285,6 +286,7 @@ while True:
             kwatth = 20
         prevcnt= int(v[6])
         prevt= t
+        addFlux('power', "power", round(kwatth,3))
         f = power
         print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
         print(v[0], round(kwatth,3), v[2], int(float(v[4])), v[6], addr, flush=True)
