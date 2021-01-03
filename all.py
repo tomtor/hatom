@@ -22,11 +22,6 @@ bPower="0.0"
 
 pressure= { }
 
-for line in open("/home/tom/tmp/baro.dat"):
-    sline= line.split(' ')
-    pressure[int(sline[1].split(':')[0])]= float(sline[5])
-
-
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -91,23 +86,19 @@ def on_message(client, userdata, msg):
     else :
         f = unknown
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), end=' ')
-    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
     if f == stm :
         print('stm-1', d['batt'] + 100, d['temp'], d['pres'], flush=True)
-        print('stm-1', (d['batt'] + 100)/100, d['temp'], d['pres'], file=f, flush=True)
         addFlux('stm-1', "voltage", (d['batt'] + 100)/100)
     elif f == stm2 :
         if d['batt'] >= 300 :
             d['batt'] = d['batt'] - 256
         print('stm-2', d['batt'] + 100, d['temp'], d['pres'], flush=True)
-        print('stm-2', (d['batt'] + 100)/100, d['temp'], d['pres'], file=f, flush=True)
         addFlux('stm-2', "voltage", (d['batt'] + 100)/100)
         addFlux('stm-2', "temperature", float(d['temp']))
     elif f == stmair :
         d['temp']= round(10 * float(d['temp']),1)
         d['pres']= round((float(d['pres']) - 700) * 100,1)
         print('stm-air', d['batt'] + 100, d['temp'], d['pres'], d['itemp'], flush=True)
-        print('stm-air', (d['batt'] + 100)/100, d['temp'], d['pres'], file=f, flush=True)
         addFlux('stm-air', "temperature", float(d['itemp'])-1.75)
         addFlux('stm-air', "voltage", (d['batt'] + 100)/100)
         addFlux('stm-air', "co2", d['temp'])
@@ -127,7 +118,6 @@ def on_message(client, userdata, msg):
         if d['temp'] > 1000 :
           d['temp']= round(d['temp'] - 6553.6,1)
         print('mapper-1', d['batt'], d['temp'], d['pres'], flush=True)
-        print('mapper-1', d['batt'], d['temp'], d['pres'], file=f, flush=True)
         addFlux('stm-baro', "temperature", float(d['temp']))
         addFlux('stm-baro', "pressure", float(d['pres']))
         bPres= str(round(d['pres'],1))
@@ -217,27 +207,6 @@ def blinkIt():
         #else:
             #call(["blink.py", "FIJNE KERST!", "40", "10", "10" ])
         loop= loop+1
-        temp= open("/home/tom/public_html/public/temp.txt", "w")
-        print("<span class=tempOut>", file=temp)
-        print(bOut, "&deg;", file=temp)
-        print("</span>", file=temp)
-        print("</br>", file=temp)
-        print("<span class=tempIn>", file=temp)
-        print(bIn, "&deg;", file=temp)
-        print("</span>", file=temp)
-        print("</br>", file=temp)
-        print("<span class=hydro>", file=temp)
-        print(bHumi, "%", file=temp)
-        print("</span>", file=temp)
-        print("</br>", file=temp)
-        print("<span class=pressure>", file=temp)
-        print(bPres, file=temp)
-        print("</span>", file=temp)
-        print("</br>", file=temp)
-        print("<span class=power>", file=temp)
-        print(bPower, file=temp)
-        print("</span>", file=temp)
-        temp.close()
 
 #blinkIt()
 bthr= threading.Thread(target=blinkIt)
@@ -260,9 +229,7 @@ while True:
         Volt = 75 + (1-int(v[2]))*3
         f = heater
         addFlux('esp-room', "heater", 1 - int(v[2]))
-        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
         print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, flush=True)
-        print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, file=f, flush=True)
     elif v[0] == '14791062' or v[0] == '2543320':
         Temp = float(v[4])
         Humi = float(v[6])
@@ -273,9 +240,7 @@ while True:
         Volt = round(float(v[2])/146.1165,3)
         addFlux('esp-1', "voltage", Volt)
         f = buiten
-        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
         print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, flush=True)
-        print(v[0], v[2], Volt, Temp, Humi, OTemp, addr, file=f, flush=True)
     elif v[0] == '210292' :
         t= time.time()
         if prevcnt == 0 :
@@ -288,9 +253,7 @@ while True:
         prevt= t
         addFlux('power', "power", round(kwatth,3))
         f = power
-        print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), file=f, end=' ')
         print(v[0], round(kwatth,3), v[2], int(float(v[4])), v[6], addr, flush=True)
-        print(v[0], round(kwatth,3), v[2], int(float(v[4])), v[6], addr, file=f, flush=True)
         bPower= str(round(kwatth,3))
     elif v[0] == '94678576' or v[0] == '967093808' :
         print(v[0], v[1], v[2], v[3])
