@@ -192,6 +192,7 @@ def blinkIt():
         elif lm == 5:
             bTime= datetime.now().strftime("%a %e %H:%M")
             call(["blink.py", bTime, "20", "20", "20" ])
+            call(["blink.py", " ", "20", "20", "20" ])
             pressures= ""
             cur= datetime.now().hour
             if cur != curt:

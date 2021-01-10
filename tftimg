@@ -29,5 +29,6 @@ convert -font /usr/share/fonts/truetype/msttcorefonts/Comic_Sans_MS_Bold.ttf -de
  -gravity southeast -pointsize 24 -fill 'rgb(255,0,255)' -draw "text 0,4 '$DELTA'" \
  $OUT
 
-(tft565.py $OUT 220 0 0 192.168.0.206 12345; rm $OUT) &
+#(tft565.py $OUT 220 0 0 192.168.0.206 12345; rm $OUT) &
+tft565.py $OUT 220 0 0 192.168.0.206 12345; rm $OUT
 
