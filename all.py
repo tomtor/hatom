@@ -149,15 +149,23 @@ tthr.start()
 UDP_IP = "0.0.0.0"
 UDP_PORT = 41234
 
-buiten= open("/home/tom/tmp/buiten.dat", "a")
-heater= open("/home/tom/tmp/heater.dat", "a")
-power= open("/home/tom/tmp/power.dat", "a")
-baro= open("/home/tom/tmp/baro.dat", "a")
-stm= open("/home/tom/tmp/stm32.dat", "a")
-stm2= open("/home/tom/tmp/stm32-2.dat", "a")
-stmair= open("/home/tom/tmp/stm-air.dat", "a")
+#buiten= open("/home/tom/tmp/buiten.dat", "a")
+#heater= open("/home/tom/tmp/heater.dat", "a")
+#power= open("/home/tom/tmp/power.dat", "a")
+#baro= open("/home/tom/tmp/baro.dat", "a")
+#stm= open("/home/tom/tmp/stm32.dat", "a")
+#stm2= open("/home/tom/tmp/stm32-2.dat", "a")
+#stmair= open("/home/tom/tmp/stm-air.dat", "a")
 
 unknown= open("/dev/null", "a")
+
+buiten= unknown
+heater= unknown
+power= unknown
+baro= unknown
+stm= unknown
+stm2= unknown
+stmair= unknown
 
 prevt= time.time()
 prevcnt= 0
