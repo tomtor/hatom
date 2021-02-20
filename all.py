@@ -175,24 +175,24 @@ def blinkIt():
     while True:
         lm= loop % 6
         if lm == 0:
-            call(["blink.py", bIn, "20", "0", "0" ])
-            #call(["tft.py", bIn, "200", "0", "0", "0" ])
+            #call(["blink.py", bIn, "20", "0", "0" ])
+            pass
         elif lm == 1:
-            call(["blink.py", bOut, "15", "20", "0" ])
-            #call(["tft.py", bOut, "150", "200", "0", "25" ])
+            #call(["blink.py", bOut, "15", "20", "0" ])
+            pass
         elif lm == 2:
-            call(["blink.py", bHumi, "10", "10", "40" ])
-            #call(["tft.py", bHumi, "100", "50", "255", "50" ])
+            #call(["blink.py", bHumi, "10", "10", "40" ])
+            pass
         elif lm == 3:
-            call(["blink.py", bPres, "0", "20", "20" ])
-            #call(["tft.py", bPres, "0", "200", "200", "75" ])
+            #call(["blink.py", bPres, "0", "20", "20" ])
+            pass
         elif lm == 4:
-            call(["blink.py", bPower, "0", "20", "0" ])
-            #call(["tft.py", bPower, "0", "200", "0", "100" ])
+            #call(["blink.py", bPower, "0", "20", "0" ])
+            pass
         elif lm == 5:
             bTime= datetime.now().strftime("%a %e %H:%M")
-            call(["blink.py", bTime, "20", "20", "20" ])
-            call(["blink.py", " ", "20", "20", "20" ])
+            #call(["blink.py", bTime, "20", "20", "20" ])
+            #call(["blink.py", ".", "20", "20", "20" ])
             pressures= ""
             cur= datetime.now().hour
             if cur != curt:
@@ -202,14 +202,9 @@ def blinkIt():
                 pressures= (pressures + str(x) + ' '
                             + str(pressure.get(i % 24, 1000)) + ";")
                 x= x + 1
-            #pressures= pressures + str(x) + ' ' + str(pressure[curt])
             call(["tftimg", bIn, bOut, bHumi, bPres, bPower, pressures ])
-            #call(["tft.py", bTime, "200", "200", "200", "140" ])
-        #else:
-            #call(["blink.py", "FIJNE KERST!", "40", "10", "10" ])
         loop= loop+1
 
-#blinkIt()
 bthr= threading.Thread(target=blinkIt)
 bthr.daemon= True
 bthr.start()
