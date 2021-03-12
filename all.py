@@ -178,29 +178,12 @@ loop= 0
 
 def blinkIt():
     global loop, curt
-    #threading.Timer(18.0, blinkIt).start()
 
     while True:
-        lm= loop % 6
-        if lm == 0:
-            #call(["blink.py", bIn, "20", "0", "0" ])
-            pass
-        elif lm == 1:
-            #call(["blink.py", bOut, "15", "20", "0" ])
-            pass
-        elif lm == 2:
-            #call(["blink.py", bHumi, "10", "10", "40" ])
-            pass
-        elif lm == 3:
-            #call(["blink.py", bPres, "0", "20", "20" ])
-            pass
-        elif lm == 4:
-            #call(["blink.py", bPower, "0", "20", "0" ])
-            pass
-        elif lm == 5:
+        if datetime.now().second != 0 : 
+            time.sleep(0.5)
+        else :
             bTime= datetime.now().strftime("%a %e %H:%M")
-            #call(["blink.py", bTime, "20", "20", "20" ])
-            #call(["blink.py", ".", "20", "20", "20" ])
             pressures= ""
             cur= datetime.now().hour
             if cur != curt:
@@ -211,8 +194,7 @@ def blinkIt():
                             + str(pressure.get(i % 24, 1000)) + ";")
                 x= x + 1
             call(["tftimg", bIn, bOut, bHumi, bPres, bPower, pressures ])
-            time.sleep(60)
-        loop= loop+1
+            time.sleep(1)
 
 bthr= threading.Thread(target=blinkIt)
 bthr.daemon= True
