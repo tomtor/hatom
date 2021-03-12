@@ -211,6 +211,7 @@ def blinkIt():
                             + str(pressure.get(i % 24, 1000)) + ";")
                 x= x + 1
             call(["tftimg", bIn, bOut, bHumi, bPres, bPower, pressures ])
+            time.sleep(60)
         loop= loop+1
 
 bthr= threading.Thread(target=blinkIt)
